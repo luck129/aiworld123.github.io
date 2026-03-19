@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI WORLD</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #0f2027, #2c5364, #1a1a40);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* AI核心光 */
+.core {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(0,255,255,0.4), transparent);
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: pulse 4s infinite;
+}
+
+@keyframes pulse {
+  0% {transform: translate(-50%, -50%) scale(1);}
+  50% {transform: translate(-50%, -50%) scale(1.2);}
+  100% {transform: translate(-50%, -50%) scale(1);}
+}
+
+/* AI神经网络 */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+/* 标题（暗金高级版） */
+h1 {
+  font-size: 80px;
+  margin-top: 120px;
+  background: linear-gradient(90deg, #caa64b, #f5e6a8, #caa64b);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 25px rgba(212,175,55,0.25);
+  letter-spacing: 2px;
+}
+
+/* 副标题 */
+.tagline {
+  font-size: 22px;
+  opacity: 0.75;
+  letter-spacing: 1px;
+}
+
+/* 按钮 */
+.btn {
+  padding: 15px 35px;
+  margin: 15px;
+  background: linear-gradient(90deg,#00f0ff,#00ff88);
+  border-radius: 30px;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 25px #00f0ff;
+}
+
+section {
+  padding: 100px 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 25px;
+  margin: 20px auto;
+  max-width: 700px;
+  backdrop-filter: blur(15px);
+}
+
+img {
+  margin-top: 20px;
+  border-radius: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="network"></canvas>
+<div class="core"></div>
+
+<div class="content">
+
+<h1>AI WORLD</h1>
+<p class="tagline">Enter a New Era Powered by Artificial Intelligence</p>
+
+<!-- 品牌副标（新增） -->
+<p style="opacity:0.6; letter-spacing:2px; margin-top:-10px;">
+THE FUTURE ECONOMY POWERED BY AI
+</p>
+
+<!-- 🌍 主视觉 -->
+<img src="https://images.unsplash.com/photo-1677442136019-21780ecad995"
+style="width:300px;box-shadow:0 0 30px rgba(0,255,255,0.3);">
+
+<br>
+
+<a href="#" class="btn">🚀 BUY NOW</a>
+<a href="#" class="btn">🌐 JOIN COMMUNITY</a>
+
+<section>
+<div class="card">
+<h2>About</h2>
+<p>
+AI World represents a future where artificial intelligence reshapes human life, 
+eliminating the need to work for survival.
+</p>
+
+<img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485"
+style="width:100%;">
+</div>
+</section>
+
+<section>
+<div class="card">
+<h2>Tokenomics</h2>
+<p>
+Total Supply: 1,000,000,000<br>
+50% Community<br>
+30% Liquidity<br>
+20% Ecosystem
+</p>
+</div>
+</section>
+
+<section>
+<div class="card">
+<h2>Vision</h2>
+<p>
+A future where humans no longer chase money,  
+but embrace freedom, creativity, and experience.
+</p>
+
+<img src="https://images.unsplash.com/photo-1682686581362-796145f0e123"
+style="width:100%;">
+</div>
+</section>
+
+<section>
+<div class="card">
+<h2>Join Us</h2>
+<p>Telegram | Twitter (X)</p>
+</div>
+</section>
+
+</div>
+
+<script>
+const canvas = document.getElementById("network");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let nodes = [];
+
+for (let i = 0; i < 60; i++) {
+  nodes.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5),
+    vy: (Math.random() - 0.5)
+  });
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  nodes.forEach(n => {
+    n.x += n.vx;
+    n.y += n.vy;
+
+    if(n.x<0||n.x>canvas.width) n.vx*=-1;
+    if(n.y<0||n.y>canvas.height) n.vy*=-1;
+
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 2, 0, Math.PI*2);
+    ctx.fillStyle = "#00ffff";
+    ctx.fill();
+  });
+
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      let dx = nodes[i].x - nodes[j].x;
+      let dy = nodes[i].y - nodes[j].y;
+      let dist = Math.sqrt(dx*dx+dy*dy);
+
+      if(dist<120){
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x,nodes[i].y);
+        ctx.lineTo(nodes[j].x,nodes[j].y);
+        ctx.strokeStyle = "rgba(0,255,255,0.2)";
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+
+</body>
+</html>
